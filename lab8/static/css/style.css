@@ -1,26 +1,24 @@
-/* Basic styling */
+/* Basic styling for the student dashboard */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    margin: 20px;
 }
 
-h1, h2 {
-    color: #333;
+h1 {
+    text-align: center;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
 }
 
 button {
+    margin: 5px;
     padding: 10px 20px;
-    margin: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+    font-size: 14px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 table {
@@ -29,9 +27,12 @@ table {
     margin-top: 20px;
 }
 
-th, td {
-    padding: 8px 12px;
+table, th, td {
     border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
     text-align: left;
 }
 
@@ -39,10 +40,10 @@ th {
     background-color: #f2f2f2;
 }
 
-#addCourses, #myCourses {
-    margin-top: 20px;
+form {
+    display: inline;
 }
 
-#addCourses {
+#myCourses, #addCourses {
     display: none;
 }

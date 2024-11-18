@@ -1,5 +1,7 @@
-function showTab(tabId) {
+function showTab(tabName) {
     document.getElementById('myCourses').style.display = 'none';
     document.getElementById('addCourses').style.display = 'none';
-    document.getElementById(tabId).style.display = 'block';
+    document.getElementById(tabName).style.display = 'block';
 }
+
+showTab('myCourses');

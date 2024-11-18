@@ -30,7 +30,7 @@
                 <td>{{ enrollment.course.name }}</td>
                 <td>{{ enrollment.course.teacher.name }}</td>
                 <td>{{ enrollment.course.time }}</td>
-                <td>{{ enrollment.course.course_students|length }}</td>
+                <td>{{ enrollment.course.course_students|length }}/{{ enrollment.course.capacity }}</td>
             </tr>
             {% endfor %}
         </table>
@@ -45,15 +45,27 @@
                 <th>Teacher</th>
                 <th>Time</th>
                 <th>Students Enrolled</th>
-                <th>Add Class</th>
+                <th>Action</th>
             </tr>
-            {% for course in all_courses %}
+            {% for course, status in courses_with_status %}
             <tr>
                 <td>{{ course.name }}</td>
                 <td>{{ course.teacher.name }}</td>
                 <td>{{ course.time }}</td>
-                <td>{{ course.course_students|length }}</td>
-                <td>  </td>
+                <td>{{ course.course_students|length }}/{{ course.capacity }}</td>
+                <td>
+                    {% if status == 'Add' %}
+                    <!-- Form to Add Course -->
+                    <form action="{{ url_for('add_course', course_id=course.id) }}" method="post">
+                        <button type="submit">Add</button>
+                    </form>
+                    {% else %}
+                    <!-- Form to Drop Course -->
+                    <form action="{{ url_for('drop_course', course_id=course.id) }}" method="post">
+                        <button type="submit">Drop</button>
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>
