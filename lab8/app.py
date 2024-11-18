@@ -66,9 +66,26 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('dashboard'))
+        username = request.form['username']
+        student = Student.query.filter_by(name=username).first()
+        if student:
+            session['username'] = username
+            session['student_id'] = student.id
+            return redirect(url_for('student_dashboard'))
+        else:
+            return "User not found", 404
     return render_template('login.html')
+
+@app.route('/student_dashboard')
+def student_dashboard():
+    if 'student_id' not in session:
+        return redirect(url_for('login'))
+    
+    student_id = session['student_id']
+    student_courses = CourseStudent.query.filter_by(student_id=student_id).all()
+    all_courses = Course.query.all()
+
+    return render_template('student_dashboard.html', student_courses=student_courses, all_courses=all_courses)
 
 @app.route('/dashboard')
 def dashboard():
