@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ session['username'] }}</h1>
+    <a href="{{ url_for('logout') }}">Sign Out</a>
+
+    <div>
+        <button onclick="showTab('myCourses')">My Courses</button>
+        <button onclick="showTab('addCourses')">Add Courses</button>
+    </div>
+
+    <!-- My Courses Tab -->
+    <div id="myCourses">
+        <h2>My Courses</h2>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Teacher</th>
+                <th>Time</th>
+                <th>Students Enrolled</th>
+            </tr>
+            {% for enrollment in student_courses %}
+            <tr>
+                <td>{{ enrollment.course.name }}</td>
+                <td>{{ enrollment.course.teacher.name }}</td>
+                <td>{{ enrollment.course.time }}</td>
+                <td>{{ enrollment.course.course_students|length }}/{{ enrollment.course.capacity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Add Courses Tab -->
+    <div id="addCourses">
+        <h2>Add Courses</h2>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Teacher</th>
+                <th>Time</th>
+                <th>Students Enrolled</th>
+                <th>Action</th>
+            </tr>
+            {% for course, status in courses_with_status %}
+            <tr>
+                <td>{{ course.name }}</td>
+                <td>{{ course.teacher.name }}</td>
+                <td>{{ course.time }}</td>
+                <td>{{ course.course_students|length }}/{{ course.capacity }}</td>
+                <td>
+                    {% if status == 'Add' %}
+                    <!-- Form to Add Course -->
+                    <form action="{{ url_for('add_course', course_id=course.id) }}" method="post">
+                        <button type="submit">Add</button>
+                    </form>
+                    {% else %}
+                    <!-- Form to Drop Course -->
+                    <form action="{{ url_for('drop_course', course_id=course.id) }}" method="post">
+                        <button type="submit">Drop</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
